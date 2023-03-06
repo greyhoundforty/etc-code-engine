@@ -2,9 +2,9 @@ name: ICR Image build and push
 
 on:
   push:
-    branches: [ "dev" ]
+    branches: [ "main" ]
   pull_request:
-    branches: [ "dev" ]
+    branches: [ "main" ]
 env:
   GITHUB_SHA: ${{ github.sha }}
   IMAGE_NAME: python-env-etcd
