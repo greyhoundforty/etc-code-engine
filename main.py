@@ -31,5 +31,6 @@ try:
     print(connectionVars)
     print("trying to print the values")
     print(connectionVars['composed'])
+    print(connectionVars['composed'][0])
 except KeyError:
     print("Key not found")
