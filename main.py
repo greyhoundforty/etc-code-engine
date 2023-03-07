@@ -14,7 +14,6 @@ json_object = json.loads(etcdServiceVar)
 # print(type(json_object))
 # print(json_object)
 
-
 # print(type(etcdServiceVar))
 # print("ETCD env var value: " + etcdServiceVar)
 print("seeing if we can pull all values from json object")
@@ -26,6 +25,5 @@ authCreds = json_object.values()
 
 try:
     print(authCreds)
-    print(authCreds["authentication"])
 except KeyError:
     print("Key not found")
