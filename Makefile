@@ -9,7 +9,7 @@ gh-run-list:
 	gh run list --workflow="ICR Image build and push" --limit 1
 
 gh-run-watch:
-	gh run watch && echo "run is done!"
+	sleep 10; gh run watch && echo "run is done!"
 
 # Submit new job run to Code Engine
 ce-submit-job:
