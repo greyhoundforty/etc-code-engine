@@ -30,6 +30,6 @@ try:
     print(argumentVars)
     print(connectionVars)
     print("trying to print the values")
-    print(connectionVars['authentication'])
+    print(connectionVars['composed'])
 except KeyError:
     print("Key not found")
