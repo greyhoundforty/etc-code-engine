@@ -16,9 +16,9 @@ json_object = json.loads(etcdServiceVar)
 
 # print(type(etcdServiceVar))
 # print("ETCD env var value: " + etcdServiceVar)
-print("seeing if we can pull all values from json object")
-for values in json_object.values():
-   print(values)
+# print("seeing if we can pull all values from json object")
+# for values in json_object.values():
+#    print(values)
 
 
 # authCreds = json_object.values()
