@@ -22,4 +22,9 @@ for values in json_object.values():
    print(values)
 
 
-print(json_object["authentication"])
+print(type(json_object))
+try:
+    print(json_object['authentication']['composed'])
+except KeyError:
+    print("Key not found")
+    
