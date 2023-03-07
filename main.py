@@ -19,7 +19,8 @@ try:
     # print(connectionVars['hosts'][0]['port'])
     # print("Pulling password for etcd instance")
     print("attempting to pull cert info for etcd instance")
-    certDetails = base64.decode(connectionVars['certificate'])
+    certDetails = base64.b64decode(connectionVars['certificate']).decode('utf-8')
+
     print(certDetails)
 except KeyError:
     print("Key not found")
