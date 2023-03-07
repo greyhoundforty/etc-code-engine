@@ -5,11 +5,12 @@ import json
 etcdServiceVar = os.environ.get('DATABASES_FOR_ETCD_CONNECTION')
 
 json_object = json.loads(etcdServiceVar)
+argVars = list(json_object.values())[0]
 connectionVars = list(json_object.values())[1]
 
 try:
-    # print("Pulling composed connection info for etcd instance")
-    # print(connectionVars['composed'][0])
+    print("Dumping full argVars")
+    print(argVars)
     # print("Pulling hosts for etcd instance")
     # print(connectionVars['hosts'])
     print("Pulling hostname for etcd instance")
