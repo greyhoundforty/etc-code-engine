@@ -24,7 +24,6 @@ for values in json_object.values():
 
 print(type(json_object))
 try:
-    print(json_object['authentication']['composed'])
+    print(json_object["authentication"])
 except KeyError:
     print("Key not found")
-    
