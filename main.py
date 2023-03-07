@@ -8,11 +8,13 @@ json_object = json.loads(etcdServiceVar)
 connectionVars = list(json_object.values())[1]
 
 try:
-    print("Pulling composed connection info for etcd instance")
-    print(connectionVars['composed'][0])
-    print("Pulling hosts for etcd instance")
-    print(connectionVars['hosts'])
+    # print("Pulling composed connection info for etcd instance")
+    # print(connectionVars['composed'][0])
+    # print("Pulling hosts for etcd instance")
+    # print(connectionVars['hosts'])
     print("Pulling hostname for etcd instance")
-    print(connectionVars['hosts'][0])
+    print(connectionVars['hosts'][0]['hostname'])
+    print("Pulling port for etcd instance")
+    print(connectionVars['hosts'][0]['port'])
 except KeyError:
     print("Key not found")

@@ -13,5 +13,7 @@ ce-submit-job:
 	
 	ibmcloud ce jobrun submit --name $$(date +%Y%m%d%H%M%S)-run  --job python-get-env 
 
-	ibmcloud ce jobrun get --name $$(ibmcloud ce jobrun list -s age --job python-get-env --output json | jq -r '.items[0].metadata.name')
+	echo "Following jobrun logs" 
+
+	ibmcloud ce jobrun logs -f -n $$(ibmcloud ce jobrun list -s age --job python-get-env --output json | jq -r '.items[0].metadata.name')
 
