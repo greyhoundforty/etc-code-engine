@@ -9,4 +9,5 @@ gh-run-watch:
 
 # Submit new job run to Code Engine
 ce-submit-job:
-	ibmcloud ce jobrun submit --name $$(date +%Y%m%d%H%M%S)-run  --job python-get-env
+	ibmcloud ce jobrun submit --name $$(date +%Y%m%d%H%M%S)-run  --job python-get-env -o json | jq -r '.id' > jobrun_id.txt
+	
