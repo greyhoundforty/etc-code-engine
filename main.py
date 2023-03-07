@@ -29,5 +29,7 @@ connectionVars = list(json_object.values())[1]
 try:
     print(argumentVars)
     print(connectionVars)
+    print("trying to print the values")
+    print(connectionVars['authentication'])
 except KeyError:
     print("Key not found")
