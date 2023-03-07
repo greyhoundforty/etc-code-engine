@@ -1,3 +1,7 @@
+turbo-mode: push watch 
+
+watch: gh-run-watch ce-submit-job
+
 push:
 	git add . && git commit -m "update" && git push
 

@@ -9,13 +9,13 @@ argVars = list(json_object.values())[0]
 connectionVars = list(json_object.values())[1]
 
 try:
-    print("Dumping full argVars")
-    print(argVars)
     # print("Pulling hosts for etcd instance")
     # print(connectionVars['hosts'])
     print("Pulling hostname for etcd instance")
     print(connectionVars['hosts'][0]['hostname'])
     print("Pulling port for etcd instance")
     print(connectionVars['hosts'][0]['port'])
+    print("Pulling password for etcd instance")
+    print(connectionVars['hosts'][0]['password'])
 except KeyError:
     print("Key not found")
