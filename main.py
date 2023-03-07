@@ -23,9 +23,11 @@ json_object = json.loads(etcdServiceVar)
 
 # authCreds = json_object.values()
 
-authCreds = list(json_object.values())[0]
+argumentVars = list(json_object.values())[0]
+connectionVars = list(json_object.values())[1]
 
 try:
-    print(authCreds)
+    print(argumentVars)
+    print(connectionVars)
 except KeyError:
     print("Key not found")
