@@ -10,7 +10,7 @@ etcdServiceVar = os.environ.get('DATABASES_FOR_ETCD_CONNECTION')
 # print("CE services env var value: " + ceServicesVar)
 
 # print("ETCD env var type")
-# json_object = json.loads(etcdServiceVar)
+json_object = json.loads(etcdServiceVar)
 # print(type(json_object))
 # print(json_object)
 

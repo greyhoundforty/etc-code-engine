@@ -5,7 +5,8 @@ gh-run-list:
 	gh run list --workflow="ICR Image build and push" --limit 1
 
 gh-run-watch:
-	gh run watch && notify-send "run is done!"
+	gh run watch && echo "run is done!"
 
-runjob:
+# Submit new job run to Code Engine
+ce-submit-job:
 	ibmcloud ce jobrun submit --name $$(date +%Y%m%d%H%M%S)-run  --job python-get-env
