@@ -13,6 +13,6 @@ try:
     print("Pulling hosts for etcd instance")
     print(connectionVars['hosts'])
     print("Pulling hostname for etcd instance")
-    print(connectionVars['hosts']['hostname'])
+    print(connectionVars['hosts'][0])
 except KeyError:
     print("Key not found")
