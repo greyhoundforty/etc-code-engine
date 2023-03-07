@@ -9,10 +9,10 @@ etcdServiceVar = os.environ.get('DATABASES_FOR_ETCD_CONNECTION')
 # print(type(ceServicesVar))
 # print("CE services env var value: " + ceServicesVar)
 
-print("ETCD env var type")
-json_object = json.loads(etcdServiceVar)
-print(type(json_object))
-print(json_object)
+# print("ETCD env var type")
+# json_object = json.loads(etcdServiceVar)
+# print(type(json_object))
+# print(json_object)
 
 
 # print(type(etcdServiceVar))
@@ -22,4 +22,4 @@ for values in json_object.values():
    print(values)
 
 
-print(json_object["composed"])
+print(json_object["authentication"])
