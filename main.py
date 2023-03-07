@@ -12,8 +12,6 @@ try:
     print(connectionVars['composed'][0])
     print("Pulling hosts for etcd instance")
     print(connectionVars['hosts'])
-    print("Pulling port for etcd instance")
-    print(connectionVars['port'])
     print("Pulling hostname for etcd instance")
     print(connectionVars['hosts']['hostname'])
 except KeyError:
