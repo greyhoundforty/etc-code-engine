@@ -21,7 +21,9 @@ for values in json_object.values():
    print(values)
 
 
-authCreds = json_object.values()
+# authCreds = json_object.values()
+
+authCreds = list(json_object.values())[0]
 
 try:
     print(authCreds)
