@@ -22,8 +22,10 @@ for values in json_object.values():
    print(values)
 
 
-print(type(json_object))
+authCreds = json_object.values()
+
 try:
-    print(json_object["authentication"])
+    print(authCreds)
+    print(authCreds["authentication"])
 except KeyError:
     print("Key not found")
