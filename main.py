@@ -58,7 +58,7 @@ def getWorkspaceOutputs(workspaceId, schematicsService):
 
     print("Ubuntu instance ID is: " + ubuntuInstanceID)
 
-    return str(typeCheck)
+    return ubuntuInstanceID
 
 def clientConnect(instance):
     print("what was prevusly returned from getWorkspaceOutputs: " + getWorkspaceOutputs)
@@ -79,20 +79,12 @@ def clientConnect(instance):
     getUbuntuId = ectdClient.get('/current_servers/ubuntu/id')
 
 def echotest(instance):
+    instance = ""
     print("echo test function called")
-    print("echo test function called with instance: " + instance)
+    print("echo test function called with instance: " + str(instance))
 try:
-    # print("Pulling username connection info for etcd instance")
-    # print(connectionVars['authentication']['username'])
-    # print("Pulling password connection info for etcd instance")
-    # print(connectionVars['authentication']['password'])
-    # print("Pulling hostname for etcd instance")
-    # print(connectionVars['hosts'][0]['hostname'])
-    # print("Pulling port for etcd instance")
-    # print(connectionVars['hosts'][0]['port'])
     getWorkspaceOutputs(workspaceId, schematicsService)
-    # clientConnect(instance=ubuntuInstanceID)
-    echotest(instance=str(getWorkspaceOutputs))
+    echotest(instance=ubuntuInstanceID)
     
 except ApiException as e:
     print("Etcd write failed " + str(e.code) + ": " + e.message)
