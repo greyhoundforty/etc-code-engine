@@ -16,7 +16,7 @@ connectionVars = list(json_object.values())[1]
 
 
 try:
-    print(argVars['composed'])
+    print(connectionVars['composed'])
     # print("Pulling password connection info for etcd instance")
     # print(connectionVars['authentication']['password'])
     # print("Pulling hosts for etcd instance")
