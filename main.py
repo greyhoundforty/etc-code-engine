@@ -1,7 +1,7 @@
 import os
 import json
 import base64
-import etcd
+import etcd3
 
 etcdServiceVar = os.environ.get('DATABASES_FOR_ETCD_CONNECTION')
 
