@@ -92,7 +92,7 @@ try:
     # print(connectionVars['hosts'][0]['port'])
     getWorkspaceOutputs(workspaceId, schematicsService)
     # clientConnect(instance=ubuntuInstanceID)
-    echotest(instance=getWorkspaceOutputs)
+    echotest(instance=str(getWorkspaceOutputs))
     
 except ApiException as e:
     print("Etcd write failed " + str(e.code) + ": " + e.message)
