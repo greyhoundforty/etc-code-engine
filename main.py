@@ -54,6 +54,10 @@ def getWorkspaceOutputs(workspaceId, schematicsService):
     rockyInstanceID = wsOutputs[0]['output_values'][0]['rocky_instance_id']['value']
     windowsInstanceID = wsOutputs[0]['output_values'][0]['windows_instance_id']['value']
 
+    print("Ubuntu instance ID var type is: " + type(ubuntuInstanceID))
+    print("Ubuntu instance ID is: " + ubuntuInstanceID)
+
+    return ubuntuInstanceID
 
 def clientConnect(instance):
     print("what was prevusly returned from getWorkspaceOutputs: " + getWorkspaceOutputs)
