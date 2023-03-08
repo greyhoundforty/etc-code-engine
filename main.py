@@ -72,11 +72,15 @@ def getWorkspaceOutputs(workspaceId, schematicsService):
     ectdClient.put('/current_servers/rocky/id', rockyInstanceID)
     ectdClient.put('/current_servers/windows/id', windowsInstanceID)
     print("Keys written to etcd service")
-    print("Recursively reading keys from etcd service")
-    allKeys = ectdClient.get_all(
-        keys_only=True
-    ).decode('utf-8')
-    print(allKeys)
+    print("Pulling keys from etcd service")
+    pullUbuntuID = ectdClient.get('/current_servers/ubuntu/id')
+    ubuntuId = pullUbuntuID[0].decode('utf-8')
+    print("Ubuntu ID is: " + str(ubuntuId))
+    # print("Recursively reading keys from etcd service")
+    # allKeys = ectdClient.get_all(
+    #     keys_only=True
+    # ).decode('utf-8')
+    # print(allKeys)
 try:
     getWorkspaceOutputs(workspaceId, schematicsService)
 
