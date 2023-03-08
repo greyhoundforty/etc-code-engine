@@ -6,29 +6,21 @@ import etcd
 etcdServiceVar = os.environ.get('DATABASES_FOR_ETCD_CONNECTION')
 
 json_object = json.loads(etcdServiceVar)
-argVars = list(json_object.values())[0]
 connectionVars = list(json_object.values())[1]
 
-composedConnection = connectionVars['composed'][0]
 certDetails = connectionVars['certificate']['certificate_base64']
 ca_cert=base64.b64decode(certDetails)
-cert2ElectricBoogaloo = ca_cert.decode('utf-8')
+decodedCert = ca_cert.decode('utf-8')
 
-# certname = '/etc/ssl/certs/db-ca.crt'
-# with open(certname, 'w+') as output_file:
-#     output_file.write(ca_cert.decode('utf-8'))
+certname = '/etc/ssl/certs/db-ca.crt'
+with open(certname, 'w+') as output_file:
+    output_file.write(decodedCert)
 
-# etcdClient = etcd.Client(
-#     host=connectionVars['hosts'][0]['hostname'],
-#     port=connectionVars['hosts'][0]['port'],
-#     username=connectionVars['authentication']['username'],
-#     password=connectionVars['authentication']['password'],
-#     allow_reconnect=True,
-#     protocol='https',
-#     ca_cert='/etc/ssl/certs/db-ca.crt'
-# )
-
-# getLeader = etcdClient.leader
+etcdHost = host=connectionVars['hosts'][0]['hostname'],
+etcdPort =connectionVars['hosts'][0]['port']
+etcdUser = connectionVars['authentication']['username']
+etcdPass = connectionVars['authentication']['password']
+etcdCert = '/etc/ssl/certs/db-ca.crt'
 
 
 
@@ -41,5 +33,9 @@ try:
     print(connectionVars['hosts'][0]['hostname'])
     print("Pulling port for etcd instance")
     print(connectionVars['hosts'][0]['port'])
+    ectdClient = etcd3.client(host=etcdHost, port=etcdPort, ca_cert=etcdCert, timeout=10, user=etcdUser, password=etcdPass)
+    print("Connection to etcd instance successful")
+    print("Pulling test key from etcd instance")
+    print(ectdClient.get('foo'))
 except KeyError:
     print("Error in code")
