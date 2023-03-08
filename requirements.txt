@@ -1,5 +1,5 @@
 ibm-cloud-sdk-core==3.16.2
 ibm-platform-services==0.31.1
 etcd3==0.12.0
-protoc>=3.19.0
+protobuf==3.19.0
 
