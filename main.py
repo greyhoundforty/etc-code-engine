@@ -11,6 +11,7 @@ connectionVars = list(json_object.values())[1]
 
 composedConnection = connectionVars['composed'][0]
 certDetails = connectionVars['certificate']['certificate_base64']
+ca_cert=base64.b64decode(certDetails)
 
 # etcdClient = etcd.Client(
 #     host=connectionVars['hosts'][0]['hostname'],
