@@ -58,11 +58,11 @@ def getWorkspaceOutputs(workspaceId, schematicsService):
     # print("Rocky instance ID is " + str(rockyInstanceID))
     # print("Windows instance ID is " + str(windowsInstanceID))
 
-    return ubuntuInstanceID
+    return str(wsOutputs[0]['output_values'][0]['ubuntu_instance_id']['value'])
 
 
 def clientConnect(getWorkspaceOutputs):
-    print("Output from previous command: " + str(getWorkspaceOutputs))
+    print("what was prevusly returned from getWorkspaceOutputs: " + getWorkspaceOutputs)
     ectdClient = etcd3.client(
         host=etcdHost, 
         port=etcdPort, 
