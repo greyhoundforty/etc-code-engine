@@ -54,11 +54,9 @@ def getWorkspaceOutputs(workspaceId, schematicsService):
     pullAllOutputs = pullUbuntuIp = wsOutputs[0]['output_values'][0]
     # print("All outputs are: " + str(pullAllOutputs))
     ubuntuInstanceID = str(wsOutputs[0]['output_values'][0]['ubuntu_instance_id']['value'])
-    rockyInstanceID = wsOutputs[0]['output_values'][0]['rocky_instance_id']['value']
-    windowsInstanceID = wsOutputs[0]['output_values'][0]['windows_instance_id']['value']
-    typeCheck = type(ubuntuInstanceID)
-    print("Type of ubuntuInstanceID is: " + str(typeCheck))
-    print("Ubuntu instance ID is: " + ubuntuInstanceID)
+    rockyInstanceID = str(wsOutputs[0]['output_values'][0]['rocky_instance_id']['value'])
+    windowsInstanceID = str(wsOutputs[0]['output_values'][0]['windows_instance_id']['value'])
+
     ectdClient = etcd3.client(
         host=etcdHost, 
         port=etcdPort, 
@@ -68,16 +66,13 @@ def getWorkspaceOutputs(workspaceId, schematicsService):
         password=etcdPass
     )
     print("Connected to etcd service")
-    print("attempting to write to etcd service")
+    print("Attempting to write instance IDs to etcd")
     ectdClient.put('/current_servers/ubuntu/id', ubuntuInstanceID)
-    print("Ubuntu instance ID written to etcd service")
-    print("pulling ubuntu instance ID from etcd service")
-    getUbuntuId = ectdClient.get('/current_servers/ubuntu/id')
-    print("Convert tuple to list")
-    ubuntuId = list(getUbuntuId)[0].decode('utf-8')
-    print(ubuntuId)
-    # print("Ubuntu instance ID pulled from etcd service")
-    # print("Ubuntu instance ID pulled from etcd is: " + ubuntuId)
+    ectdClient.put('/current_servers/rocky/id', rockyInstanceID)
+    ectdClient.put('/current_servers/windows/id', windowsInstanceID)
+    print("Keys written to etcd service")
+    print("Recursively reading keys from etcd service")
+    
 try:
     getWorkspaceOutputs(workspaceId, schematicsService)
 
