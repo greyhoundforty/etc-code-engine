@@ -26,9 +26,6 @@ schematicsService = SchematicsV1(authenticator=authenticator)
 schematicsURL = "https://us.schematics.cloud.ibm.com"
 schematicsService.set_service_url(schematicsURL)
 
-# ceServiceJson = json.loads(ceEnvVars)
-# ceServiceVars = list(ceServiceJson.values())
-
 connectionJson = json.loads(etcdServiceVar)
 connectionVars = list(connectionJson.values())[1]
 
@@ -52,11 +49,10 @@ def getWorkspaceOutputs(workspaceId, schematicsService):
     ).get_result()
 
     allOutputs = wsOutputs[0]['output_values'][0]
-    # print("All outputs are: " + str(pullAllOutputs))
+
     ubuntuInstanceID = str(allOutputs['ubuntu_instance_id']['value'])
-    # ubuntuInstanceID = str(wsOutputs[0]['output_values'][0]['ubuntu_instance_id']['value'])
-    rockyInstanceID = str(wsOutputs[0]['output_values'][0]['rocky_instance_id']['value'])
-    windowsInstanceID = str(wsOutputs[0]['output_values'][0]['windows_instance_id']['value'])
+    rockyInstanceID = str(allOutputs['rocky_instance_id']['value'])
+    windowsInstanceID = str(allOutputs['windows_instance_id']['value'])
 
     ectdClient = etcd3.client(
         host=etcdHost, 
@@ -72,19 +68,10 @@ def getWorkspaceOutputs(workspaceId, schematicsService):
     ectdClient.put('/current_servers/rocky/id', rockyInstanceID)
     ectdClient.put('/current_servers/windows/id', windowsInstanceID)
     print("Keys written to etcd service")
-    print("Pulling keys from etcd service")
-    pullUbuntuID = ectdClient.get('/current_servers/ubuntu/id')
-    ubuntuId = pullUbuntuID[0].decode('utf-8')
-    print("Ubuntu ID is: " + str(ubuntuId))
-    pullAllKeys = ectdClient.get_all(keys_only=True)
-    allKeys = pullAllKeys[0].decode('utf-8')
-    # print("Recursively reading keys from etcd service")
-    # allKeys = ectdClient.get_all(
-    #     keys_only=True
-    # ).decode('utf-8')
-    print(allKeys)
 try:
     getWorkspaceOutputs(workspaceId, schematicsService)
 
-except ApiException as e:
-    print("Etcd write failed " + str(e.code) + ": " + e.message)
+except KeyError():
+    print("KeyError: Unable to write to etcd service")
+# except ApiException as e:
+#     print("Etcd write failed " + str(e.code) + ": " + e.message)
