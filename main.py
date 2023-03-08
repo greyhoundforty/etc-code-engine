@@ -54,14 +54,15 @@ def getWorkspaceOutputs(workspaceId, schematicsService):
     rockyInstanceID = wsOutputs[0]['output_values'][0]['rocky_instance_id']['value']
     windowsInstanceID = wsOutputs[0]['output_values'][0]['windows_instance_id']['value']
 
-    print("Ubuntu instance ID is " + ubuntuInstanceID)
-    print("Rocky instance ID is " + str(rockyInstanceID))
-    print("Windows instance ID is " + str(windowsInstanceID))
+    # print("Ubuntu instance ID is " + ubuntuInstanceID)
+    # print("Rocky instance ID is " + str(rockyInstanceID))
+    # print("Windows instance ID is " + str(windowsInstanceID))
 
     return ubuntuInstanceID
 
 
 def clientConnect(getWorkspaceOutputs):
+    print("Output from previous command: " + getWorkspaceOutputs)
     ectdClient = etcd3.client(
         host=etcdHost, 
         port=etcdPort, 
@@ -70,13 +71,13 @@ def clientConnect(getWorkspaceOutputs):
         user=etcdUser, 
         password=etcdPass
     )
-    print(getWorkspaceOutputs)
+    
     print("Connected to etcd service")
-    # print("attempting to write to etcd service")
-    # storeUbuntuId = ectdClient.put('/current_servers/ubuntu/id', ubuntuInstance)
-    # print("Ubuntu instance ID written to etcd service")
-    # print("pulling ubuntu instance ID from etcd service")
-    # getUbuntuId = ectdClient.get('/current_servers/ubuntu/id')
+    print("attempting to write to etcd service")
+    storeUbuntuId = ectdClient.put('/current_servers/ubuntu/id', getWorkspaceOutputs)
+    print("Ubuntu instance ID written to etcd service")
+    print("pulling ubuntu instance ID from etcd service")
+    getUbuntuId = ectdClient.get('/current_servers/ubuntu/id')
 
 try:
     # print("Pulling username connection info for etcd instance")
