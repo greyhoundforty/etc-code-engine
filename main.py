@@ -54,7 +54,8 @@ def getWorkspaceOutputs(workspaceId, schematicsService):
     rockyInstanceID = wsOutputs[0]['output_values'][0]['rocky_instance_id']['value']
     windowsInstanceID = wsOutputs[0]['output_values'][0]['windows_instance_id']['value']
     typeCheck = type(ubuntuInstanceID)
-    print("Ubuntu instance ID var type is: " + typeCheck)
+    print("Type of ubuntuInstanceID is: " + str(typeCheck))
+
     print("Ubuntu instance ID is: " + ubuntuInstanceID)
 
     return ubuntuInstanceID
