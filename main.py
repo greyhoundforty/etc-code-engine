@@ -50,11 +50,11 @@ def getWorkspaceOutputs(workspaceId, schematicsService):
 
     pullAllOutputs = pullUbuntuIp = wsOutputs[0]['output_values'][0]
     # print("All outputs are: " + str(pullAllOutputs))
-    ubuntuInstanceID = str(wsOutputs[0]['output_values'][0]['ubuntu_instance_id']['value'])
+    ubuntuInstanceID = wsOutputs[0]['output_values'][0]['ubuntu_instance_id']['value']
     rockyInstanceID = wsOutputs[0]['output_values'][0]['rocky_instance_id']['value']
     windowsInstanceID = wsOutputs[0]['output_values'][0]['windows_instance_id']['value']
 
-    print("Ubuntu instance ID var type is: " + type(ubuntuInstanceID))
+    print("Ubuntu instance ID var type is: " + type(str(ubuntuInstanceID)))
     print("Ubuntu instance ID is: " + ubuntuInstanceID)
 
     return ubuntuInstanceID
@@ -87,7 +87,7 @@ try:
     # print("Pulling port for etcd instance")
     # print(connectionVars['hosts'][0]['port'])
     getWorkspaceOutputs(workspaceId, schematicsService)
-    clientConnect(instance=ubuntuInstanceID)
+    # clientConnect(instance=ubuntuInstanceID)
     
 except ApiException as e:
     print("Etcd write failed " + str(e.code) + ": " + e.message)
