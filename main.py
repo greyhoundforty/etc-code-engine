@@ -76,11 +76,13 @@ def getWorkspaceOutputs(workspaceId, schematicsService):
     pullUbuntuID = ectdClient.get('/current_servers/ubuntu/id')
     ubuntuId = pullUbuntuID[0].decode('utf-8')
     print("Ubuntu ID is: " + str(ubuntuId))
+    pullAllKeys = ectdClient.get_all(keys_only=True)
+    allKeys = pullAllKeys[0].decode('utf-8')
     # print("Recursively reading keys from etcd service")
     # allKeys = ectdClient.get_all(
     #     keys_only=True
     # ).decode('utf-8')
-    # print(allKeys)
+    print(allKeys)
 try:
     getWorkspaceOutputs(workspaceId, schematicsService)
 
