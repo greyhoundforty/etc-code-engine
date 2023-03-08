@@ -22,10 +22,10 @@ etcdClient = etcd.Client(
     ca_cert=base64.b64decode(certDetails)
 )
 
-getLeader = etcdClient.leader
+# getLeader = etcdClient.leader
 
 try:
-    print(getLeader)
+    print(ca_cert)
     # print("Pulling password connection info for etcd instance")
     # print(connectionVars['authentication']['password'])
     # print("Pulling hosts for etcd instance")
