@@ -10,6 +10,7 @@ argVars = list(json_object.values())[0]
 connectionVars = list(json_object.values())[1]
 
 composedConnection = connectionVars['composed'][0]
+certDetails = connectionVars['certificate']['certificate_base64']
 
 etcdClient = etcd.Client(
     composedConnection,
@@ -32,7 +33,7 @@ try:
     # # print(connectionVars['hosts'][0]['port'])
     # # print("Pulling password for etcd instance")
     # print("attempting to pull cert info for etcd instance")
-    # certDetails = connectionVars['certificate']['certificate_base64']
+    # 
 
     # print(certDetails)
     # print("attempting to decode cert info for etcd instance")
