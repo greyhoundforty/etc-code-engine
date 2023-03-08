@@ -70,8 +70,9 @@ def getWorkspaceOutputs(workspaceId, schematicsService):
     print("Ubuntu instance ID written to etcd service")
     print("pulling ubuntu instance ID from etcd service")
     getUbuntuId = ectdClient.get('/current_servers/ubuntu/id')
+    ubuntuId = getUbuntuId.decode('utf-8')
     print("Ubuntu instance ID pulled from etcd service")
-    print("Ubuntu instance ID pulled from etcd is: " + getUbuntuId.decode("utf-8"))
+    print("Ubuntu instance ID pulled from etcd is: " + ubuntuId)
 try:
     getWorkspaceOutputs(workspaceId, schematicsService)
 
