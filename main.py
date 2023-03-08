@@ -1,11 +1,18 @@
 import os
 import json
 import base64
+import etcd
 
 etcdServiceVar = os.environ.get('DATABASES_FOR_ETCD_CONNECTION')
 
 json_object = json.loads(etcdServiceVar)
 connectionVars = list(json_object.values())[1]
+
+# etcdClient = etcd.Client(
+#     ssl=True,
+#     ca_cert="/path/to/cert/ca-certificate.crt"
+# )
+
 
 try:
     # print("Pulling password connection info for etcd instance")
@@ -21,5 +28,7 @@ try:
     certDetails = connectionVars['certificate']['certificate_base64']
 
     print(certDetails)
+    print("attempting to decode cert info for etcd instance")
+    certDetailsDecoded = base64.b64decode(certDetails)
 except KeyError:
     print("Key not found")
