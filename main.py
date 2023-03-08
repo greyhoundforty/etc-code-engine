@@ -74,7 +74,7 @@ def getWorkspaceOutputs(workspaceId, schematicsService):
     print("pulling ubuntu instance ID from etcd service")
     getUbuntuId = ectdClient.get('/current_servers/ubuntu/id')
     print("Convert tuple to list")
-    ubuntuId = list(getUbuntuId)
+    ubuntuId = list(getUbuntuId[0])
     print(ubuntuId)
     # print("Ubuntu instance ID pulled from etcd service")
     # print("Ubuntu instance ID pulled from etcd is: " + ubuntuId)
