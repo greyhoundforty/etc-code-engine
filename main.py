@@ -14,7 +14,8 @@ certDetails = connectionVars['certificate']['certificate_base64']
 
 etcdClient = etcd.Client(
     composedConnection,
-    ssl=True,
+    allow_reconnect=True,
+    protocol='https',
     ca_cert=base64.b64decode(certDetails)
 )
 
