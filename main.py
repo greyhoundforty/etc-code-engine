@@ -9,14 +9,19 @@ json_object = json.loads(etcdServiceVar)
 argVars = list(json_object.values())[0]
 connectionVars = list(json_object.values())[1]
 
-# etcdClient = etcd.Client(
-#     ssl=True,
-#     ca_cert=base64.b64decode(certDetails)
-# )
+composedConnection = connectionVars['composed'][0]
 
+etcdClient = etcd.Client(
+    composedConnection,
+    ssl=True,
+    ca_cert=base64.b64decode(certDetails)
+)
+
+getLeader = etcdClient.leader
 
 try:
     print(connectionVars['composed'][0])
+    print(getLeader)
     # print("Pulling password connection info for etcd instance")
     # print(connectionVars['authentication']['password'])
     # print("Pulling hosts for etcd instance")
@@ -33,4 +38,4 @@ try:
     # print("attempting to decode cert info for etcd instance")
     # certDetailsDecoded = base64.b64decode(certDetails)
 except KeyError:
-    print("Key not found")
+    print("Error in code")
