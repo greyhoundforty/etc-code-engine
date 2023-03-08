@@ -14,19 +14,19 @@ certDetails = connectionVars['certificate']['certificate_base64']
 ca_cert=base64.b64decode(certDetails)
 cert2ElectricBoogaloo = ca_cert.decode('utf-8')
 
-certname = '/etc/ssl/certs/db-ca.crt'
-with open(certname, 'w+') as output_file:
-    output_file.write(ca_cert.decode('utf-8'))
+# certname = '/etc/ssl/certs/db-ca.crt'
+# with open(certname, 'w+') as output_file:
+#     output_file.write(ca_cert.decode('utf-8'))
 
-etcdClient = etcd.Client(
-    host=connectionVars['hosts'][0]['hostname'],
-    port=connectionVars['hosts'][0]['port'],
-    username=connectionVars['authentication']['username'],
-    password=connectionVars['authentication']['password'],
-    allow_reconnect=True,
-    protocol='https',
-    ca_cert='/etc/ssl/certs/db-ca.crt'
-)
+# etcdClient = etcd.Client(
+#     host=connectionVars['hosts'][0]['hostname'],
+#     port=connectionVars['hosts'][0]['port'],
+#     username=connectionVars['authentication']['username'],
+#     password=connectionVars['authentication']['password'],
+#     allow_reconnect=True,
+#     protocol='https',
+#     ca_cert='/etc/ssl/certs/db-ca.crt'
+# )
 
 # getLeader = etcdClient.leader
 
