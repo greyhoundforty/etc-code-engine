@@ -20,24 +20,24 @@ certname = '/etc/ssl/certs/db-ca.crt'
 with open(certname, 'w+') as output_file:
     output_file.write(decodedCert)
 
-etcdHost = connectionVars['hosts'][0]['hostname'],
+etcdHost = connectionVars['hosts'][0]['hostname']
 etcdPort =connectionVars['hosts'][0]['port']
 etcdUser = connectionVars['authentication']['username']
 etcdPass = connectionVars['authentication']['password']
 etcdCert = '/etc/ssl/certs/db-ca.crt'
 
-# def clientConnect():
-#     ectdClient = etcd3.client(
-#         host=etcdHost, 
-#         port=etcdPort, 
-#         ca_cert=etcdCert, 
-#         timeout=10, 
-#         user=etcdUser, 
-#         password=etcdPass
-#     )
+def clientConnect():
+    ectdClient = etcd3.client(
+        host=etcdHost, 
+        port=etcdPort, 
+        ca_cert=etcdCert, 
+        timeout=10, 
+        user=etcdUser, 
+        password=etcdPass
+    )
 
-#     pullThing = print(ectdClient.get('foo'))
-#     return ectdClient
+    pullThing = print(ectdClient.get('foo'))
+    return ectdClient
 
 
 lookupHostname = socket.gethostbyname(etcdHost)
@@ -53,7 +53,7 @@ try:
     print(connectionVars['hosts'][0]['port'])
     print("checking DNS resolution for etcd instance")
     print(lookupHostname)
-    # clientConnect()
+    clientConnect()
     print("Connection to etcd instance successful")
     
 except KeyError:
