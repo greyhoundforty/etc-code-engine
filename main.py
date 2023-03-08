@@ -55,13 +55,7 @@ def getWorkspaceOutputs(workspaceId, schematicsService):
     windowsInstanceID = wsOutputs[0]['output_values'][0]['windows_instance_id']['value']
     typeCheck = type(ubuntuInstanceID)
     print("Type of ubuntuInstanceID is: " + str(typeCheck))
-
     print("Ubuntu instance ID is: " + ubuntuInstanceID)
-
-    return ubuntuInstanceID
-
-def clientConnect(instance):
-    print("what was prevusly returned from getWorkspaceOutputs: " + getWorkspaceOutputs)
     ectdClient = etcd3.client(
         host=etcdHost, 
         port=etcdPort, 
@@ -70,21 +64,15 @@ def clientConnect(instance):
         user=etcdUser, 
         password=etcdPass
     )
-    
     print("Connected to etcd service")
     print("attempting to write to etcd service")
-    storeUbuntuId = ectdClient.put('/current_servers/ubuntu/id', instance)
+    storeUbuntuId = ectdClient.put('/current_servers/ubuntu/id', ubuntuInstanceID)
     print("Ubuntu instance ID written to etcd service")
     print("pulling ubuntu instance ID from etcd service")
     getUbuntuId = ectdClient.get('/current_servers/ubuntu/id')
-
-def echotest(instance):
-    instance = ""
-    print("echo test function called")
-    print("echo test function called with instance: " + str(instance))
+    print("Ubuntu instance ID pulled from etcd service")
 try:
     getWorkspaceOutputs(workspaceId, schematicsService)
-    echotest(instance=ubuntuInstanceID)
-    
+
 except ApiException as e:
     print("Etcd write failed " + str(e.code) + ": " + e.message)
