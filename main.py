@@ -50,11 +50,11 @@ def getWorkspaceOutputs(workspaceId, schematicsService):
 
     pullAllOutputs = pullUbuntuIp = wsOutputs[0]['output_values'][0]
     # print("All outputs are: " + str(pullAllOutputs))
-    ubuntuInstanceID = wsOutputs[0]['output_values'][0]['ubuntu_instance_id']['value']
+    ubuntuInstanceID = str(wsOutputs[0]['output_values'][0]['ubuntu_instance_id']['value'])
     rockyInstanceID = wsOutputs[0]['output_values'][0]['rocky_instance_id']['value']
     windowsInstanceID = wsOutputs[0]['output_values'][0]['windows_instance_id']['value']
-
-    print("Ubuntu instance ID var type is: " + type(str(ubuntuInstanceID)))
+    typeCheck = type(ubuntuInstanceID)
+    print("Ubuntu instance ID var type is: " + typeCheck)
     print("Ubuntu instance ID is: " + ubuntuInstanceID)
 
     return ubuntuInstanceID
