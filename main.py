@@ -13,7 +13,10 @@ composedConnection = connectionVars['composed'][0]
 certDetails = connectionVars['certificate']['certificate_base64']
 
 etcdClient = etcd.Client(
-    composedConnection,
+    host=connectionVars['hosts'][0]['hostname'],
+    port=connectionVars['hosts'][0]['port'],
+    username=connectionVars['authentication']['username'],
+    password=connectionVars['authentication']['password'],
     allow_reconnect=True,
     protocol='https',
     ca_cert=base64.b64decode(certDetails)
@@ -22,7 +25,6 @@ etcdClient = etcd.Client(
 getLeader = etcdClient.leader
 
 try:
-    print(connectionVars['composed'][0])
     print(getLeader)
     # print("Pulling password connection info for etcd instance")
     # print(connectionVars['authentication']['password'])
