@@ -26,21 +26,17 @@ etcdUser = connectionVars['authentication']['username']
 etcdPass = connectionVars['authentication']['password']
 etcdCert = '/etc/ssl/certs/db-ca.crt'
 
-# def clientConnect():
-#     ectdClient = etcd3.client(
-#         host=etcdHost, 
-#         port=etcdPort, 
-#         ca_cert=etcdCert, 
-#         timeout=10, 
-#         user=etcdUser, 
-#         password=etcdPass
-#     )
+def clientConnect():
+    ectdClient = etcd3.client(
+        host=etcdHost, 
+        port=etcdPort, 
+        ca_cert=etcdCert, 
+        timeout=10, 
+        user=etcdUser, 
+        password=etcdPass
+    )
 
-#     pullThing = print(ectdClient.get('foo'))
-#     return ectdClient
-
-
-lookupHostname = socket.getnameinfo(etcdHost)
+    pullThing = print(ectdClient.get('foo'))
 
 try:
     # print("Pulling username connection info for etcd instance")
@@ -51,9 +47,8 @@ try:
     # print(connectionVars['hosts'][0]['hostname'])
     # print("Pulling port for etcd instance")
     # print(connectionVars['hosts'][0]['port'])
-    print("checking DNS resolution for etcd instance")
-    print(lookupHostname)
-    # clientConnect()
+    print("Attempting to connect to etcd instance")
+    clientConnect()
     print("Connection to etcd instance successful")
     
 except KeyError:
