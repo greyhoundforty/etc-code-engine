@@ -12,6 +12,7 @@ import etcd3
 # os.environ['GRPC_VERBOSITY'] = 'DEBUG'
 workspaceId = os.environ.get('WORKSPACE_ID')
 etcdServiceVar = os.environ.get('DATABASES_FOR_ETCD_CONNECTION')
+ceEnvVars = os.environ.get('CE_SERVICES')
 
 authenticator = IAMAuthenticator(
     apikey=os.environ.get('IBMCLOUD_API_KEY'),
@@ -25,6 +26,9 @@ refreshToken = authenticator.token_manager.request_token()['refresh_token']
 schematicsService = SchematicsV1(authenticator=authenticator)
 schematicsURL = "https://us.schematics.cloud.ibm.com"
 schematicsService.set_service_url(schematicsURL)
+
+ceServiceJson = json.loads(ceEnvVars)
+ceServiceVars = list(ceServiceJson.values())
 
 json_object = json.loads(etcdServiceVar)
 connectionVars = list(json_object.values())[1]
@@ -74,6 +78,7 @@ def getWorkspaceOutputs(workspaceId, schematicsService):
     print("Ubuntu instance ID pulled from etcd service")
     print("Ubuntu instance ID pulled from etcd is: " + ubuntuId)
 try:
+    print(ceServiceVars)
     getWorkspaceOutputs(workspaceId, schematicsService)
 
 except ApiException as e:
