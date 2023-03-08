@@ -2,8 +2,8 @@ import os
 import json
 import base64
 import etcd3
-import socket
 
+## Only uncomment if you need to debug gprc connection.
 # os.environ['GRPC_TRACE'] = 'all'
 # os.environ['GRPC_VERBOSITY'] = 'DEBUG'
 
@@ -26,7 +26,25 @@ etcdUser = connectionVars['authentication']['username']
 etcdPass = connectionVars['authentication']['password']
 etcdCert = '/etc/ssl/certs/db-ca.crt'
 
-def clientConnect():
+def getWorkspaceOutputs(workspaceId, schematicsService):
+    wsOutputs = schematicsService.get_workspace_outputs(
+        w_id=workspaceId,
+    ).get_result()
+
+    pullAllOutputs = pullUbuntuIp = wsOutputs[0]['output_values'][0]
+    # print("All outputs are: " + str(pullAllOutputs))
+    ubuntuInstanceID = wsOutputs[0]['output_values'][0]['ubuntu_instance_id']['value']
+    rockyInstanceID = wsOutputs[0]['output_values'][0]['rocky_instance_id']['value']
+    windowsInstanceID = wsOutputs[0]['output_values'][0]['windows_instance_id']['value']
+
+    print("Ubuntu instance ID is " + str(ubuntuInstanceID))
+    print("Rocky instance ID is " + str(rockyInstanceID))
+    print("Windows instance ID is " + str(windowsInstanceID))
+
+    return ubuntuInstanceID, rockyInstanceID, windowsInstanceID
+
+
+def clientConnect(ubuntuInstanceID):
     ectdClient = etcd3.client(
         host=etcdHost, 
         port=etcdPort, 
@@ -36,7 +54,12 @@ def clientConnect():
         password=etcdPass
     )
 
-    pullThing = print(ectdClient.get('foo'))
+    print("Connected to etcd service")
+    print("attempting to write to etcd service")
+    storeUbuntuId = ectdClient.put('/current_servers/ubuntu/id', ubuntuInstanceID)
+    print("Ubuntu instance ID written to etcd service")
+    print("pulling ubuntu instance ID from etcd service")
+    getUbuntuId = ectdClient.get('/current_servers/ubuntu/id')
 
 try:
     # print("Pulling username connection info for etcd instance")
@@ -47,9 +70,8 @@ try:
     # print(connectionVars['hosts'][0]['hostname'])
     # print("Pulling port for etcd instance")
     # print(connectionVars['hosts'][0]['port'])
-    print("Attempting to connect to etcd instance")
-    clientConnect()
-    print("Connection to etcd instance successful")
+    getWorkspaceOutputs(workspaceId, schematicsService)
+    clientConnect(ubuntuInstanceID)
     
 except KeyError:
     print("Error in code")
