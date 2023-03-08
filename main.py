@@ -1,5 +1,9 @@
 import os
+import sys
 import json
+from ibm_cloud_sdk_core.authenticators import IAMAuthenticator
+from ibm_cloud_sdk_core import ApiException
+from ibm_schematics.schematics_v1 import SchematicsV1
 import base64
 import etcd3
 
@@ -86,5 +90,5 @@ try:
     getWorkspaceOutputs(workspaceId, schematicsService)
     clientConnect(ubuntuInstanceID)
     
-except KeyError:
-    print("Error in code")
+except ApiException as e:
+    print("Etcd write failed " + str(e.code) + ": " + e.message)
