@@ -72,7 +72,8 @@ def getWorkspaceOutputs(workspaceId, schematicsService):
     ectdClient.put('/current_servers/windows/id', windowsInstanceID)
     print("Keys written to etcd service")
     print("Recursively reading keys from etcd service")
-    
+    allKeys = ectdClient.get_all()
+    print(allKeys)
 try:
     getWorkspaceOutputs(workspaceId, schematicsService)
 
