@@ -62,7 +62,7 @@ def getWorkspaceOutputs(workspaceId, schematicsService):
 
 
 def clientConnect(getWorkspaceOutputs):
-    print("Output from previous command: " + getWorkspaceOutputs)
+    print("Output from previous command: " + str(getWorkspaceOutputs))
     ectdClient = etcd3.client(
         host=etcdHost, 
         port=etcdPort, 
