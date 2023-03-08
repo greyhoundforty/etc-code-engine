@@ -75,7 +75,7 @@ def getWorkspaceOutputs(workspaceId, schematicsService):
     allKeys = ectdClient.get_all(
         keys_only=True
     )
-    print(allKeys)
+    print(allKeys).decode('utf-8')
 try:
     getWorkspaceOutputs(workspaceId, schematicsService)
 
