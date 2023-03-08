@@ -6,8 +6,21 @@ import etcd3
 ## Only uncomment if you need to debug gprc connection.
 # os.environ['GRPC_TRACE'] = 'all'
 # os.environ['GRPC_VERBOSITY'] = 'DEBUG'
-
+workspaceId = os.environ.get('WORKSPACE_ID')
 etcdServiceVar = os.environ.get('DATABASES_FOR_ETCD_CONNECTION')
+
+authenticator = IAMAuthenticator(
+    apikey=os.environ.get('IBMCLOUD_API_KEY'),
+    client_id='bx',
+    client_secret='bx'
+    )
+
+refreshToken = authenticator.token_manager.request_token()['refresh_token']
+
+# Set up Schematics service client, endpoint, and workspace ID 
+schematicsService = SchematicsV1(authenticator=authenticator)
+schematicsURL = "https://us.schematics.cloud.ibm.com"
+schematicsService.set_service_url(schematicsURL)
 
 json_object = json.loads(etcdServiceVar)
 connectionVars = list(json_object.values())[1]
