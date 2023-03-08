@@ -13,22 +13,24 @@ composedConnection = connectionVars['composed'][0]
 certDetails = connectionVars['certificate']['certificate_base64']
 ca_cert=base64.b64decode(certDetails)
 cert2ElectricBoogaloo = ca_cert.decode('utf-8')
-# etcdClient = etcd.Client(
-#     host=connectionVars['hosts'][0]['hostname'],
-#     port=connectionVars['hosts'][0]['port'],
-#     username=connectionVars['authentication']['username'],
-#     password=connectionVars['authentication']['password'],
-#     allow_reconnect=True,
-#     protocol='https',
-#     ca_cert=base64.b64decode(certDetails)
-# )
+
+certname = '/etc/ssl/certs/db-ca.crt'
+with open(certname, 'w+') as output_file:
+    output_file.write(ca_cert.decode('utf-8'))
+
+etcdClient = etcd.Client(
+    host=connectionVars['hosts'][0]['hostname'],
+    port=connectionVars['hosts'][0]['port'],
+    username=connectionVars['authentication']['username'],
+    password=connectionVars['authentication']['password'],
+    allow_reconnect=True,
+    protocol='https',
+    ca_cert='/etc/ssl/certs/db-ca.crt'
+)
 
 # getLeader = etcdClient.leader
 
-etcdHost = connectionVars['hosts'][0]['hostname']
-etcdPort=connectionVars['hosts'][0]['port']
-etcdUsername=connectionVars['authentication']['username']
-etcdPassword=connectionVars['authentication']['password']
+
 
 try:
     print("Pulling username connection info for etcd instance")
@@ -39,16 +41,5 @@ try:
     print(connectionVars['hosts'][0]['hostname'])
     print("Pulling port for etcd instance")
     print(connectionVars['hosts'][0]['port'])
-    print("Pulling decoded cert for etcd instance")
-    print(ca_cert)
-    print("Pulling corrected decoded cert for etcd instance")
-    print(cert2ElectricBoogaloo)
-    # # print("Pulling password for etcd instance")
-    # print("attempting to pull cert info for etcd instance")
-    # 
-
-    # print(certDetails)
-    # print("attempting to decode cert info for etcd instance")
-    # certDetailsDecoded = base64.b64decode(certDetails)
 except KeyError:
     print("Error in code")
