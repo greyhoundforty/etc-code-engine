@@ -2,6 +2,7 @@ import os
 import json
 import base64
 import etcd3
+import socket
 
 os.environ['GRPC_TRACE'] = 'all'
 os.environ['GRPC_VERBOSITY'] = 'DEBUG'
@@ -25,20 +26,21 @@ etcdUser = connectionVars['authentication']['username']
 etcdPass = connectionVars['authentication']['password']
 etcdCert = '/etc/ssl/certs/db-ca.crt'
 
-def clientConnect():
-    ectdClient = etcd3.client(
-        host=etcdHost, 
-        port=etcdPort, 
-        ca_cert=etcdCert, 
-        timeout=10, 
-        user=etcdUser, 
-        password=etcdPass
-    )
+# def clientConnect():
+#     ectdClient = etcd3.client(
+#         host=etcdHost, 
+#         port=etcdPort, 
+#         ca_cert=etcdCert, 
+#         timeout=10, 
+#         user=etcdUser, 
+#         password=etcdPass
+#     )
 
-    pullThing = print(ectdClient.get('foo'))
-    return ectdClient
+#     pullThing = print(ectdClient.get('foo'))
+#     return ectdClient
 
 
+lookupHostname = socket.gethostbyname(etcdHost)
 
 try:
     print("Pulling username connection info for etcd instance")
@@ -49,7 +51,9 @@ try:
     print(connectionVars['hosts'][0]['hostname'])
     print("Pulling port for etcd instance")
     print(connectionVars['hosts'][0]['port'])
-    clientConnect()
+    print("checking DNS resolution for etcd instance")
+    print(lookupHostname)
+    # clientConnect()
     print("Connection to etcd instance successful")
     
 except KeyError:
