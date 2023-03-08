@@ -88,7 +88,7 @@ try:
     # print("Pulling port for etcd instance")
     # print(connectionVars['hosts'][0]['port'])
     getWorkspaceOutputs(workspaceId, schematicsService)
-    clientConnect()
+    clientConnect(getWorkspaceOutputs)
     
 except ApiException as e:
     print("Etcd write failed " + str(e.code) + ": " + e.message)
