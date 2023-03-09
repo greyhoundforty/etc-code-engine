@@ -37,39 +37,48 @@ certname = '/etc/ssl/certs/db-ca.crt'
 with open(certname, 'w+') as output_file:
     output_file.write(decodedCert)
 
-etcdHost = connectionVars['hosts'][0]['hostname']
+# etcdHost = connectionVars['hosts'][0]['hostname']
 etcdPort = connectionVars['hosts'][0]['port']
 etcdUser = connectionVars['authentication']['username']
 etcdPass = connectionVars['authentication']['password']
 etcdCert = '/etc/ssl/certs/db-ca.crt'
 
-def getWorkspaceOutputs(workspaceId, schematicsService):
+ectdClient = etcd3.client(
+    host=connectionVars['hosts'][0]['hostname'], 
+    port=etcdPort, 
+    ca_cert=etcdCert, 
+    timeout=10, 
+    user=etcdUser, 
+    password=etcdPass
+)
+
+def getWorkspaceOutputs(schematicsService, workspaceId, instance):
     wsOutputs = schematicsService.get_workspace_outputs(
         w_id=workspaceId,
     ).get_result()
 
-    allOutputs = wsOutputs[0]['output_values'][0]
+    outputValue = str(wsOutputs[0]['output_values'][0][instance]['value'])
+    return outputValue
 
-    ubuntuInstanceID = str(allOutputs['ubuntu_instance_id']['value'])
-    rockyInstanceID = str(allOutputs['rocky_instance_id']['value'])
-    windowsInstanceID = str(allOutputs['windows_instance_id']['value'])
+def pullOutput(instance):
+    instanceId = getWorkspaceOutputs(schematicsService, workspaceId, instance=instance)
+    return instanceId
 
-    ectdClient = etcd3.client(
-        host=etcdHost, 
-        port=etcdPort, 
-        ca_cert=etcdCert, 
-        timeout=10, 
-        user=etcdUser, 
-        password=etcdPass
-    )
+def etcWrite(etcdClient):
+
     print("Connected to etcd service")
+
+    ubuntuInstanceID = str(pullOutput(instance = 'ubuntu_instance_id'))
+    rockyInstanceID = str(pullOutput(instance = 'rocky_instance_id'))
+    windowsInstanceID = str(pullOutput(instance = 'windows_instance_id'))
+
     print("Attempting to write instance IDs to etcd")
     ectdClient.put('/current_servers/ubuntu/id', ubuntuInstanceID)
     ectdClient.put('/current_servers/rocky/id', rockyInstanceID)
     ectdClient.put('/current_servers/windows/id', windowsInstanceID)
     print("Keys written to etcd service")
 try:
-    getWorkspaceOutputs(workspaceId, schematicsService)
+    etcWrite(etcdClient)
 
 except KeyError():
     print("KeyError: Unable to write to etcd service")
