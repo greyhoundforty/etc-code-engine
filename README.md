@@ -1,5 +1,7 @@
 # Pull ICD services binding from Code Engine
 
+Python container to pull ICD services binding from Code Engine Environment Variables and then write them to an instance of IBM Cloud Databases for Etcd.
+
 ```python
 etcdServiceVar = os.environ.get('DATABASES_FOR_ETCD_CONNECTION')
 json_object = json.loads(etcdServiceVar)
