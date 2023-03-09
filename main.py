@@ -43,7 +43,7 @@ etcdUser = connectionVars['authentication']['username']
 etcdPass = connectionVars['authentication']['password']
 etcdCert = '/etc/ssl/certs/db-ca.crt'
 
-ectdClient = etcd3.client(
+etcdClient = etcd3.client(
     host=connectionVars['hosts'][0]['hostname'], 
     port=etcdPort, 
     ca_cert=etcdCert, 
@@ -64,7 +64,7 @@ def pullOutput(instance):
     instanceId = getWorkspaceOutputs(schematicsService, workspaceId, instance=instance)
     return instanceId
 
-def etcWrite(etcdClient):
+def etcdWrite(etcdClient):
 
     print("Connected to etcd service")
 
@@ -78,7 +78,7 @@ def etcWrite(etcdClient):
     ectdClient.put('/current_servers/windows/id', windowsInstanceID)
     print("Keys written to etcd service")
 try:
-    etcWrite(etcdClient)
+    etcdWrite(etcdClient)
 
 except KeyError():
     print("KeyError: Unable to write to etcd service")
