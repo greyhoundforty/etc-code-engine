@@ -73,9 +73,9 @@ def etcdWrite(etcdClient):
     windowsInstanceID = str(pullOutput(instance = 'windows_instance_id'))
 
     print("Attempting to write instance IDs to etcd")
-    ectdClient.put('/current_servers/ubuntu/id', ubuntuInstanceID)
-    ectdClient.put('/current_servers/rocky/id', rockyInstanceID)
-    ectdClient.put('/current_servers/windows/id', windowsInstanceID)
+    etcdClient.put('/current_servers/ubuntu/id', ubuntuInstanceID)
+    etcdClient.put('/current_servers/rocky/id', rockyInstanceID)
+    etcdClient.put('/current_servers/windows/id', windowsInstanceID)
     print("Keys written to etcd service")
 try:
     etcdWrite(etcdClient)
